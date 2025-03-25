@@ -197,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 367559009707069820}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 6779232718079797579}
   - component: {fileID: 7673458126206219188}
   - component: {fileID: 7517933458168933526}
+  - component: {fileID: 7491451559173539961}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -238,13 +239,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3012533477922485248}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: 0, y: 3, z: -5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6065918184241514573}
-  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6779232718079797579
 Camera:
   m_ObjectHideFlags: 0
@@ -348,6 +349,25 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &7491451559173539961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3012533477922485248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5ebd84acd986a44b510af79bee673a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: 250
+  maxUp: -90
+  maxDown: 90
+  xOffset: 0
+  yOffset: 0
+  radius: 3
+  spinSensitivity: 250
 --- !u!1 &3014439933855454632
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +498,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3413155814703404441}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -514,9 +534,8 @@ MonoBehaviour:
   car: {fileID: 0}
   moveAcceleration: 2000
   maxSpeed: 15
-  jumpForce: 5
-  sensitivity: 10
-  score: 0
+  jumpForce: 20
+  sensitivity: 250
   driving: 0
 --- !u!136 &954115938782813708
 CapsuleCollider:
@@ -540,7 +559,7 @@ CapsuleCollider:
   m_Radius: 0.55
   m_Height: 2.3
   m_Direction: 1
-  m_Center: {x: 0, y: 0.4, z: 0}
+  m_Center: {x: 0, y: -0.6, z: 0}
 --- !u!1 &3516971189772989373
 GameObject:
   m_ObjectHideFlags: 0

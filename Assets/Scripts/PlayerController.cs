@@ -20,11 +20,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float jumpForce = 50;
     [SerializeField]
-    float sensitivity = 5;
+    float sensitivity = 250;
 
-    public int score = 0;
-
-    Collider collider;
+    Collider myCollider;
 
     [SerializeField]
     bool driving = false;
@@ -44,12 +42,12 @@ public class PlayerController : MonoBehaviour
         secondaryAction = InputSystem.actions.FindAction("Secondary");
         interactAction = InputSystem.actions.FindAction("Interact");
 
-        collider = GetComponent<Collider>();
+        myCollider = GetComponent<Collider>();
     }
 
     void Update() {
 
-        if (interactAction.triggered) {
+        if (interactAction.triggered) {Debug.Log("hds");
             driveToggle();
         }
 
@@ -61,7 +59,13 @@ public class PlayerController : MonoBehaviour
         } else {
             transform.position = car.transform.position;
         }
+
+        if (!secondaryAction.IsPressed()) {
+            //Turn player
+            transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime, Space.Self);
+        }
     }
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -77,18 +81,16 @@ public class PlayerController : MonoBehaviour
             }
  
         }
+    }
+    
 
-        //Rotate to mouse
-        float rotateHorizontal = Input.GetAxis("Mouse X");
-        //Turn player
-        transform.Rotate(Vector3.up * rotateHorizontal * sensitivity, Space.Self);
-
-        if (secondaryAction.IsPressed()) { //Unturn model
-            model.transform.Rotate(Vector3.up * rotateHorizontal * -sensitivity, Space.Self);
-        } 
-
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, transform.localScale.y + 1.1f);
     }
 
+
+    //Driving
     void driveToggle() {
         if (driving) {
             Exit();
@@ -100,28 +102,15 @@ public class PlayerController : MonoBehaviour
     void Enter() {
         driving = true;
         rb.linearVelocity = new Vector3();
-        collider.enabled = false;
+        myCollider.enabled = false;
         car.Enter();
     }
 
     void Exit() {
         driving = false;
         transform.Translate(0,3,0);
-        collider.enabled = true;
+        myCollider.enabled = true;
         car.Exit();
-    }
-
-
-    void OnTriggerEnter(Collider collision) {
-        GameObject other = collision.gameObject;
-        score += other.tag.Equals("Coin") ? 5 : -10;
-        Destroy(other);
-    }
-
-
-    bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, -Vector3.up, transform.localScale.y + 0.1f);
     }
 
 }
