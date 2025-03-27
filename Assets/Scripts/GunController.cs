@@ -16,13 +16,13 @@ public class GunController : MonoBehaviour
     [SerializeField]
     Image reloadImage;
 
-    //Input Systems
-    InputAction attackAction;
+    [SerializeField]
+    bool isFriendly;
 
     //Gun Variables
-    enum GunType {Pistol,Cannon,Sniper}
+    public enum GunType {Pistol,Cannon,Sniper}
     [SerializeField]
-    GunType curGun = GunType.Pistol;
+    public GunType curGun = GunType.Pistol;
 
     //Pistol Variables
     float pistolBulletSpeed = 40;
@@ -43,25 +43,10 @@ public class GunController : MonoBehaviour
     float sniperBulletSize = 2;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Shoot()
     {
-        attackAction = InputSystem.actions.FindAction("Attack");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (attackAction.triggered && reloaded) {
+        if (reloaded) {
             Fire();
-        }
-
-        if (Input.GetKey(KeyCode.Alpha1)) {
-            curGun = GunType.Pistol;
-        } else if (Input.GetKey(KeyCode.Alpha2)) {
-            curGun = GunType.Cannon;
-        } else if (Input.GetKey(KeyCode.Alpha3)) {
-            curGun = GunType.Sniper;
         }
 
     }
@@ -93,19 +78,19 @@ public class GunController : MonoBehaviour
 
     void PistolBullet(GameObject bullet) {
         bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*pistolBulletSpeed;
-        bullet.GetComponent<BulletController>().setup(pistolBulletDamange,true,pistolBulletLifeSpan);
+        bullet.GetComponent<BulletController>().setup(pistolBulletDamange,isFriendly,pistolBulletLifeSpan);
         bullet.transform.localScale *= pistolBulletSize;
     }
 
     void CannonBullet(GameObject bullet) {
         bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*cannonBulletSpeed;
-        bullet.GetComponent<BulletController>().setup(cannonBulletDamange,true,cannonBulletLifeSpan);
+        bullet.GetComponent<BulletController>().setup(cannonBulletDamange,isFriendly,cannonBulletLifeSpan);
         bullet.transform.localScale *= cannonBulletSize;
     }
 
     void SniperBullet(GameObject bullet) {
         bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*sniperBulletSpeed;
-        bullet.GetComponent<BulletController>().setup(sniperBulletDamange,true,sniperBulletLifeSpan);
+        bullet.GetComponent<BulletController>().setup(sniperBulletDamange,isFriendly,sniperBulletLifeSpan);
         bullet.transform.localScale *= sniperBulletSize;
     }
 

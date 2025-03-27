@@ -27,12 +27,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float carRange = 10;
     bool driving = false;
+
+    [SerializeField]
+    GunController myGun;
     
     //Input systems
     InputAction moveAction;
     InputAction jumpAction;
     InputAction secondaryAction;
     InputAction interactAction;
+    InputAction attackAction;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,6 +46,7 @@ public class PlayerController : MonoBehaviour
         jumpAction = InputSystem.actions.FindAction("Jump");
         secondaryAction = InputSystem.actions.FindAction("Secondary");
         interactAction = InputSystem.actions.FindAction("Interact");
+        attackAction = InputSystem.actions.FindAction("Attack");
 
         myCollider = GetComponent<Collider>();
     }
@@ -49,7 +54,7 @@ public class PlayerController : MonoBehaviour
     void Update() {
 
         if (interactAction.triggered) {
-            driveToggle();
+            DriveToggle();
         }
 
         if (!driving) {
@@ -64,6 +69,20 @@ public class PlayerController : MonoBehaviour
         if (!secondaryAction.IsPressed()) {
             //Turn player
             transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime, Space.Self);
+        }
+
+
+        //Shooting
+        if (attackAction.triggered) {
+            myGun.Shoot();
+        }
+
+        if (Input.GetKey(KeyCode.Alpha1)) {
+            myGun.curGun = GunController.GunType.Pistol;
+        } else if (Input.GetKey(KeyCode.Alpha2)) {
+            myGun.curGun = GunController.GunType.Cannon;
+        } else if (Input.GetKey(KeyCode.Alpha3)) {
+            myGun.curGun = GunController.GunType.Sniper;
         }
     }
 
@@ -92,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
 
     //Driving
-    void driveToggle() {
+    void DriveToggle() {
         if (driving) {
             Exit();
         } else {
