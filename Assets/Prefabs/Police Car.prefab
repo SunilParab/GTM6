@@ -337,9 +337,10 @@ GameObject:
   - component: {fileID: 7203562148967113549}
   - component: {fileID: 7744808948948846470}
   - component: {fileID: 3281517877166865896}
+  - component: {fileID: 3256116686587696801}
   m_Layer: 0
-  m_Name: Car
-  m_TagString: Untagged
+  m_Name: Police Car
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -412,9 +413,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 7744808948948846470}
-  moveAcceleration: 25000
+  moveAcceleration: 25
   maxSpeed: 50
   rotationSpeed: 1
+--- !u!65 &3256116686587696801
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2791798849901498178}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 4, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3292369252395561546
 GameObject:
   m_ObjectHideFlags: 0

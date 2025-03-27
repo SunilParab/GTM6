@@ -53,7 +53,7 @@ public class CarController : MonoBehaviour
 
             float acceleration = reversing ? -moveAcceleration : moveAcceleration;
             
-            rb.AddForce(transform.rotation*(acceleration*Time.deltaTime*moveValue),ForceMode.Force);
+            rb.AddForce(transform.rotation*(acceleration*1000*Time.deltaTime*moveValue),ForceMode.Force);
 
             if (rb.linearVelocity.magnitude > maxSpeed) {
                 rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;

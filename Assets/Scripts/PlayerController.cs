@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject model;
     [SerializeField]
-    CarController car;
+    CarController myCar;
     [SerializeField]
     float moveAcceleration = 500;
     [SerializeField]
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     Collider myCollider;
 
     [SerializeField]
+    float carRange = 10;
     bool driving = false;
     
     //Input systems
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     void Update() {
 
-        if (interactAction.triggered) {Debug.Log("hds");
+        if (interactAction.triggered) {
             driveToggle();
         }
 
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(jumpForce*Vector3.up,ForceMode.Impulse);
             }
         } else {
-            transform.position = car.transform.position;
+            transform.position = myCar.transform.position;
         }
 
         if (!secondaryAction.IsPressed()) {
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour
             Vector3 moveValue = new Vector3(moveInput.x, 0, moveInput.y);
 
             if (rb.linearVelocity.magnitude < maxSpeed) {
-                rb.AddForce(transform.rotation*(moveAcceleration*Time.deltaTime*moveValue),ForceMode.Force);
+                rb.AddForce(transform.rotation*(moveAcceleration*1000*Time.deltaTime*moveValue),ForceMode.Force);
             }
  
         }
@@ -100,17 +101,32 @@ public class PlayerController : MonoBehaviour
     }
 
     void Enter() {
-        driving = true;
-        rb.linearVelocity = new Vector3();
-        myCollider.enabled = false;
-        car.Enter();
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, carRange);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Car")) {
+                myCar = hitCollider.GetComponent<CarController>();
+                break;
+            }
+        }
+
+        if (myCar != null) {
+            driving = true;
+            rb.linearVelocity = new Vector3();
+            myCollider.enabled = false;
+            myCar.Enter();
+        }
+
     }
 
     void Exit() {
         driving = false;
         transform.Translate(0,3,0);
         myCollider.enabled = true;
-        car.Exit();
+        myCar.Exit();
+
+        myCar = null;
     }
 
 }
