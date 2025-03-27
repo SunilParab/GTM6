@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject model;
     [SerializeField]
+    Collider myCollider;
+    [SerializeField]
+    CameraController myCamera;
     CarController myCar;
     [SerializeField]
     float moveAcceleration = 500;
@@ -22,14 +25,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float sensitivity = 250;
 
-    Collider myCollider;
-
     [SerializeField]
     float carRange = 10;
     bool driving = false;
 
     [SerializeField]
+    bool firstPerson = false;
+
+    [SerializeField]
     GunController myGun;
+    float gunRotation;
     
     //Input systems
     InputAction moveAction;
@@ -37,7 +42,7 @@ public class PlayerController : MonoBehaviour
     InputAction secondaryAction;
     InputAction interactAction;
     InputAction attackAction;
-
+    InputAction zoomAction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,8 +52,7 @@ public class PlayerController : MonoBehaviour
         secondaryAction = InputSystem.actions.FindAction("Secondary");
         interactAction = InputSystem.actions.FindAction("Interact");
         attackAction = InputSystem.actions.FindAction("Attack");
-
-        myCollider = GetComponent<Collider>();
+        zoomAction = InputSystem.actions.FindAction("Zoom");
     }
 
     void Update() {
@@ -58,10 +62,26 @@ public class PlayerController : MonoBehaviour
         }
 
         if (!driving) {
+
+            //First Person
+            if (zoomAction.triggered) {
+                if (firstPerson) {
+                    UnZoom();
+                } else {
+                    Zoom();
+                }
+            }
+
             //Jumping
             if (jumpAction.triggered && IsGrounded()) {
                 rb.AddForce(jumpForce*Vector3.up,ForceMode.Impulse);
             }
+
+            //Point Gun
+            gunRotation -= Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
+            gunRotation = Mathf.Clamp(gunRotation, myCamera.maxUp, myCamera.maxDown);
+            myGun.transform.localEulerAngles = new Vector3(gunRotation, 0, 0);
+
         } else {
             transform.position = myCar.transform.position;
         }
@@ -80,7 +100,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha1)) {
             myGun.curGun = GunController.GunType.Pistol;
         } else if (Input.GetKey(KeyCode.Alpha2)) {
-            myGun.curGun = GunController.GunType.Cannon;
+            myGun.curGun = GunController.GunType.Shotgun;
         } else if (Input.GetKey(KeyCode.Alpha3)) {
             myGun.curGun = GunController.GunType.Sniper;
         }
@@ -121,6 +141,8 @@ public class PlayerController : MonoBehaviour
 
     void Enter() {
 
+        UnZoom();
+
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, carRange);
         foreach (var hitCollider in hitColliders)
         {
@@ -146,6 +168,20 @@ public class PlayerController : MonoBehaviour
         myCar.Exit();
 
         myCar = null;
+    }
+
+
+    //Zoom behaviors
+    void Zoom() {
+        firstPerson = true;
+        model.SetActive(false);
+        myCamera.Zoom();
+    }
+
+    void UnZoom() {
+        firstPerson = false;
+        model.SetActive(true);
+        myCamera.UnZoom();
     }
 
 }

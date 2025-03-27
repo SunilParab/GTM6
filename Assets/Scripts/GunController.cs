@@ -20,27 +20,28 @@ public class GunController : MonoBehaviour
     bool isFriendly;
 
     //Gun Variables
-    public enum GunType {Pistol,Cannon,Sniper}
-    [SerializeField]
+    public enum GunType {Pistol,Shotgun,Sniper}
     public GunType curGun = GunType.Pistol;
 
     //Pistol Variables
-    float pistolBulletSpeed = 40;
-    float pistolBulletDamange = 10;
-    float pistolBulletLifeSpan = 4;
-    float pistolBulletSize = 1;
+    const float pistolBulletSpeed = 80;
+    const float pistolBulletDamange = 20;
+    const float pistolBulletLifeSpan = 3;
+    const float pistolBulletSize = 0.5f;
 
     //Cannon Variables
-    float cannonBulletSpeed = 10;
-    float cannonBulletDamange = 20;
-    float cannonBulletLifeSpan = 10;
-    float cannonBulletSize = 5;
+    const float shotgunBulletSpeed = 160;
+    const float shotgunBulletDamange = 10;
+    const float shotgunBulletLifeSpan = 2;
+    const float shotgunBulletSize = 0.5f;
+    const int shotgunPelletNum = 12;
+    const float shotgunSpread = 0.1f;
 
     //Sniper Variables
-    float sniperBulletSpeed = 200;
-    float sniperBulletDamange = 40;
-    float sniperBulletLifeSpan = 3;
-    float sniperBulletSize = 2;
+    const float sniperBulletSpeed = 300;
+    const float sniperBulletDamange = 100;
+    const float sniperBulletLifeSpan = 2;
+    const float sniperBulletSize = 1;
 
 
     public void Shoot()
@@ -53,42 +54,50 @@ public class GunController : MonoBehaviour
 
 
     void Fire() {
-        GameObject bullet = Instantiate(bulletPrefab,transform.position,transform.rotation);
         switch (curGun) {
             case GunType.Pistol:
-                PistolBullet(bullet);
+                PistolBullet();
                 break;
-            case GunType.Cannon:
-                CannonBullet(bullet);
+            case GunType.Shotgun:
+                ShotgunShot();
                 break;
             case GunType.Sniper:
-                SniperBullet(bullet);
+                SniperBullet();
                 break;
         }
 
         reloaded = false;
-        //reloadImage.color = Color.red;
         Invoke("Reload",reloadTime);
     }
 
     void Reload() {
         reloaded = true;
-        //reloadImage.color = Color.green;
     }
 
-    void PistolBullet(GameObject bullet) {
+    void PistolBullet() {
+
+        GameObject bullet = Instantiate(bulletPrefab,transform.position,transform.rotation);
+
         bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*pistolBulletSpeed;
         bullet.GetComponent<BulletController>().setup(pistolBulletDamange,isFriendly,pistolBulletLifeSpan);
         bullet.transform.localScale *= pistolBulletSize;
     }
 
-    void CannonBullet(GameObject bullet) {
-        bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*cannonBulletSpeed;
-        bullet.GetComponent<BulletController>().setup(cannonBulletDamange,isFriendly,cannonBulletLifeSpan);
-        bullet.transform.localScale *= cannonBulletSize;
+    void ShotgunShot() {
+
+        for (int i = 0; i < shotgunPelletNum; i++) {
+            GameObject bullet = Instantiate(bulletPrefab,transform.position,transform.rotation);
+
+            bullet.GetComponent<Rigidbody>().linearVelocity = Vector3.Normalize(bullet.transform.forward+new Vector3(Random.Range(shotgunSpread,-shotgunSpread),Random.Range(shotgunSpread,-shotgunSpread),0)) *shotgunBulletSpeed;
+            bullet.GetComponent<BulletController>().setup(shotgunBulletDamange,isFriendly,shotgunBulletLifeSpan);
+            bullet.transform.localScale *= shotgunBulletSize;
+        }
     }
 
-    void SniperBullet(GameObject bullet) {
+    void SniperBullet() {
+
+        GameObject bullet = Instantiate(bulletPrefab,transform.position,transform.rotation);
+
         bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*sniperBulletSpeed;
         bullet.GetComponent<BulletController>().setup(sniperBulletDamange,isFriendly,sniperBulletLifeSpan);
         bullet.transform.localScale *= sniperBulletSize;

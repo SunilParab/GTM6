@@ -9,15 +9,14 @@ public class CameraController : MonoBehaviour
     float sensitivity = 500;
     float verticalRotation;
 
-    [SerializeField]
-    float maxUp;
-    [SerializeField]
-    float maxDown;
+    public float maxUp;
+    public float maxDown;
 
     [SerializeField]
     float xOffset;
     [SerializeField]
     float yOffset;
+    const float radiusDefault = 5;
     [SerializeField]
     float radius;
 
@@ -74,6 +73,16 @@ public class CameraController : MonoBehaviour
 
     public void SetRadius(float newRadius) {
         radius = newRadius;
+    }
+
+
+    //Zoom behaviors
+    public void Zoom() {
+        radius = 0;
+    }
+
+    public void UnZoom() {
+        radius = radiusDefault;
     }
 
 }
