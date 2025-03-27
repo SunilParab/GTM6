@@ -7,33 +7,22 @@ namespace PlayerControls {
 public class GunController : MonoBehaviour
 {
 
-    //Shooting Variables
-    [SerializeField]
-    float reloadTime = 0.5f;
-    bool reloaded = true;
-    [SerializeField]
-    GameObject bulletPrefab;
-    [SerializeField]
-    Image reloadImage;
-
-    [SerializeField]
-    bool isFriendly;
-
     //Gun Variables
     public enum GunType {Pistol,Shotgun,Sniper}
-    public GunType curGun = GunType.Pistol;
 
     //Pistol Variables
     const float pistolBulletSpeed = 80;
     const float pistolBulletDamange = 20;
     const float pistolBulletLifeSpan = 3;
     const float pistolBulletSize = 0.5f;
+    const float pistolReloadTime = 0.25f;
 
     //Cannon Variables
     const float shotgunBulletSpeed = 160;
     const float shotgunBulletDamange = 10;
     const float shotgunBulletLifeSpan = 2;
     const float shotgunBulletSize = 0.5f;
+    const float shotgunReloadTime = 0.5f;
     const int shotgunPelletNum = 12;
     const float shotgunSpread = 0.1f;
 
@@ -42,7 +31,17 @@ public class GunController : MonoBehaviour
     const float sniperBulletDamange = 100;
     const float sniperBulletLifeSpan = 2;
     const float sniperBulletSize = 1;
+    const float sniperReloadTime = 1f;
 
+    //Shooting Variables
+    public GunType curGun = GunType.Pistol;
+    float reloadTime = pistolReloadTime;
+    bool reloaded = true;
+    [SerializeField]
+    GameObject bulletPrefab;
+
+    [SerializeField]
+    bool isFriendly;
 
     public void Shoot()
     {
@@ -68,6 +67,23 @@ public class GunController : MonoBehaviour
 
         reloaded = false;
         Invoke("Reload",reloadTime);
+    }
+
+    public void SetGun(GunType newType) {
+        switch (newType) {
+            case GunType.Pistol:
+                curGun = GunType.Pistol;
+                reloadTime = pistolReloadTime;
+                break;
+            case GunType.Shotgun:
+                curGun = GunType.Shotgun;
+                reloadTime = shotgunReloadTime;
+                break;
+            case GunType.Sniper:
+                curGun = GunType.Sniper;
+                reloadTime = sniperReloadTime;
+                break;
+        }
     }
 
     void Reload() {

@@ -98,11 +98,11 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.Alpha1)) {
-            myGun.curGun = GunController.GunType.Pistol;
+            myGun.SetGun(GunController.GunType.Pistol);
         } else if (Input.GetKey(KeyCode.Alpha2)) {
-            myGun.curGun = GunController.GunType.Shotgun;
+            myGun.SetGun(GunController.GunType.Shotgun);
         } else if (Input.GetKey(KeyCode.Alpha3)) {
-            myGun.curGun = GunController.GunType.Sniper;
+            myGun.SetGun(GunController.GunType.Sniper);
         }
     }
 

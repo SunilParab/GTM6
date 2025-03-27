@@ -400,11 +400,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3573ad526278354cb662a7179ab430f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reloadTime: 0.5
-  bulletPrefab: {fileID: 7124131885278650046, guid: a563e9c01ab13be41b111e9b802cd373, type: 3}
-  reloadImage: {fileID: 0}
-  isFriendly: 0
   curGun: 0
+  bulletPrefab: {fileID: 7124131885278650046, guid: a563e9c01ab13be41b111e9b802cd373, type: 3}
+  isFriendly: 1
 --- !u!65 &651132025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -479,6 +477,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 651132022}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!136 &816303122 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 954115938782813708, guid: d38b79543174861449c67d6c5d719906, type: 3}
+  m_PrefabInstance: {fileID: 1487830176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +741,14 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5324607180794030420, guid: d38b79543174861449c67d6c5d719906, type: 3}
+      propertyPath: myCamera
+      value: 
+      objectReference: {fileID: 1706455650}
+    - target: {fileID: 5324607180794030420, guid: d38b79543174861449c67d6c5d719906, type: 3}
+      propertyPath: myCollider
+      value: 
+      objectReference: {fileID: 816303122}
+    - target: {fileID: 5324607180794030420, guid: d38b79543174861449c67d6c5d719906, type: 3}
       propertyPath: moveAcceleration
       value: 2
       objectReference: {fileID: 0}
@@ -793,6 +804,17 @@ PrefabInstance:
       addedObject: {fileID: 651132023}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d38b79543174861449c67d6c5d719906, type: 3}
+--- !u!114 &1706455650 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7491451559173539961, guid: d38b79543174861449c67d6c5d719906, type: 3}
+  m_PrefabInstance: {fileID: 1487830176}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5ebd84acd986a44b510af79bee673a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
