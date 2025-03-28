@@ -7,7 +7,7 @@ public class CarController : MonoBehaviour
     [SerializeField]
     Rigidbody rb;
     [SerializeField]
-    float moveAcceleration = 5000;
+    float moveAcceleration = 25;
     [SerializeField]
     float maxSpeed = 50;
     [SerializeField]
@@ -58,7 +58,7 @@ public class CarController : MonoBehaviour
             if (rb.linearVelocity.magnitude > maxSpeed) {
                 rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
             }
-
+            Debug.Log(rb.linearVelocity.magnitude);
             //Rotate
             transform.Rotate(Vector3.up * moveInput.x * rotationSpeed, Space.Self);
 

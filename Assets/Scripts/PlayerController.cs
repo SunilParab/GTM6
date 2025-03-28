@@ -6,6 +6,10 @@ namespace PlayerControls {
 
 public class PlayerController : MonoBehaviour
 {
+
+    [SerializeField]
+    float health = 100;
+
     //Movement Variables
     [SerializeField]
     Rigidbody rb;
@@ -77,11 +81,6 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(jumpForce*Vector3.up,ForceMode.Impulse);
             }
 
-            //Point Gun
-            gunRotation -= Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
-            gunRotation = Mathf.Clamp(gunRotation, myCamera.maxUp, myCamera.maxDown);
-            myGun.transform.localEulerAngles = new Vector3(gunRotation, 0, 0);
-
         } else {
             transform.position = myCar.transform.position;
         }
@@ -91,6 +90,11 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime, Space.Self);
         }
 
+
+        //Point Gun
+        gunRotation -= Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
+        gunRotation = Mathf.Clamp(gunRotation, myCamera.maxUp, myCamera.maxDown);
+        myGun.transform.localEulerAngles = new Vector3(gunRotation, 0, 0);
 
         //Shooting
         if (attackAction.triggered) {
@@ -123,6 +127,11 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+
+    //Internal Functions
+    public void TakeDamage(float damage) {
+        health -= damage;
+    }
 
     bool IsGrounded()
     {

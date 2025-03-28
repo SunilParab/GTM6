@@ -66,8 +66,8 @@ public class CameraController : MonoBehaviour
 
 
         //Stay out of ground
-        if (transform.position.y < 0) {
-            transform.Translate(new Vector3(0,-transform.position.y+0.01f,0),Space.World);
+        if (transform.position.y < 0.1f) {
+            transform.Translate(new Vector3(0,-transform.position.y+0.1f,0),Space.World);
         }
     }
 
