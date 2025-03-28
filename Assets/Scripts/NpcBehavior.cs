@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace NPCs {
 
@@ -6,6 +7,8 @@ public class NpcBehavior : MonoBehaviour
 {
     [SerializeField]
     protected float health;
+    [SerializeField]
+    protected NavMeshAgent nav;
 
     float cash;
 

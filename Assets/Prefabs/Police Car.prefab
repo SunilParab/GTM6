@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1647237256473342869}
   - component: {fileID: 3127768768508475552}
   - component: {fileID: 7342524527466498389}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Headlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 3240865449154534336}
   - component: {fileID: 1264982021993780910}
   - component: {fileID: 487991441996748258}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Frame (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 2563749341596510998}
   - component: {fileID: 3105315923648916541}
   - component: {fileID: 4738736296913523835}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 3281517877166865896}
   - component: {fileID: 3256116686587696801}
   - component: {fileID: -344388402345812258}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Police Car
   m_TagString: Car
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ Rigidbody:
   m_GameObject: {fileID: 2791798849901498178}
   serializedVersion: 4
   m_Mass: 20
-  m_Drag: 1
+  m_Drag: 0.3
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -414,9 +414,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 7744808948948846470}
-  moveAcceleration: 40
+  moveAcceleration: 25
   maxSpeed: 50
-  rotationSpeed: 1
+  rotationSpeed: 2
 --- !u!65 &3256116686587696801
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 6337418849622558347}
   - component: {fileID: 3219805661244356701}
   - component: {fileID: 4843829105730142298}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Headlight (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 3322379198854823314}
   - component: {fileID: 7971759099578170703}
   - component: {fileID: 4649083626083071618}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +684,7 @@ GameObject:
   - component: {fileID: 9017257679452494817}
   - component: {fileID: 7623930474262214905}
   - component: {fileID: 2166055692432868062}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +792,7 @@ GameObject:
   - component: {fileID: 2342095915422247203}
   - component: {fileID: 8047526178276741852}
   - component: {fileID: 5669752956177551681}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Headlight (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -900,7 +900,7 @@ GameObject:
   - component: {fileID: 8602528851249339221}
   - component: {fileID: 2094740542907369022}
   - component: {fileID: 76193814465481753}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Headlight (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1008,7 +1008,7 @@ GameObject:
   - component: {fileID: 3814033269986282934}
   - component: {fileID: 8266301102122614424}
   - component: {fileID: 8900181693116636835}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lights (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1116,7 +1116,7 @@ GameObject:
   - component: {fileID: 3438504537153238666}
   - component: {fileID: 1974153397903988935}
   - component: {fileID: 2398239285679378793}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1226,7 +1226,7 @@ GameObject:
   - component: {fileID: 1244531813063320220}
   - component: {fileID: 6425522088970338709}
   - component: {fileID: 8342894657754545563}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1336,7 +1336,7 @@ GameObject:
   - component: {fileID: 9180409033460112391}
   - component: {fileID: 3280352682864359910}
   - component: {fileID: 6190473527717218561}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lights (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1444,7 +1444,7 @@ GameObject:
   - component: {fileID: 4522339292881782371}
   - component: {fileID: 4991632841962475573}
   - component: {fileID: 5777295119064151733}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}

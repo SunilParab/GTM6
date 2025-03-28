@@ -1,19 +1,30 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace NPCs {
 
 public class CivilianBehavior : NpcBehavior
 {
+
+    [SerializeField]
+    float movementRange = 180;
+    [SerializeField]
+    float timer = 5;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        health = 50;
+        InvokeRepeating("PickSpot",0,timer);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(Physics.CheckBox(transform.position+new Vector3(0,-0.6f,0),new Vector3(0.55f,1.1f,0.55f)));
+        
+    }
+
+    void PickSpot() {
+        nav.SetDestination(transform.position + new Vector3(Random.Range(-movementRange, movementRange), 1.7f, Random.Range(-movementRange, movementRange)));
     }
 
 }

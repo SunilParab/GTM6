@@ -36,7 +36,7 @@ public class BulletController : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collision)
-    {Debug.Log("detect");
+    {
 
         if (friendly) {
 
@@ -45,7 +45,7 @@ public class BulletController : MonoBehaviour
             }
 
             if (collision.gameObject.CompareTag("Enemy")) {
-                collision.gameObject.GetComponent<NPCs.NpcBehavior>().TakeDamage(damage);Debug.Log("damage");
+                collision.gameObject.GetComponent<NPCs.NpcBehavior>().TakeDamage(damage);
             }
             
         } else {
@@ -58,7 +58,7 @@ public class BulletController : MonoBehaviour
                 collision.gameObject.GetComponent<PlayerControls.PlayerController>().TakeDamage(damage);
             }
 
-        }Debug.Log(collision.gameObject.name);
+        }
         Destroy(gameObject);
     }
 
