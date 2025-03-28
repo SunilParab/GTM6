@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     bool firstPerson = false;
 
     [SerializeField]
-    GunController myGun;
+    Guns.GunController myGun;
     float gunRotation;
     
     //Input systems
@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
         interactAction = InputSystem.actions.FindAction("Interact");
         attackAction = InputSystem.actions.FindAction("Attack");
         zoomAction = InputSystem.actions.FindAction("Zoom");
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update() {
@@ -102,11 +104,11 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.Alpha1)) {
-            myGun.SetGun(GunController.GunType.Pistol);
+            myGun.SetGun(Guns.GunController.GunType.Pistol);
         } else if (Input.GetKey(KeyCode.Alpha2)) {
-            myGun.SetGun(GunController.GunType.Shotgun);
+            myGun.SetGun(Guns.GunController.GunType.Shotgun);
         } else if (Input.GetKey(KeyCode.Alpha3)) {
-            myGun.SetGun(GunController.GunType.Sniper);
+            myGun.SetGun(Guns.GunController.GunType.Sniper);
         }
     }
 

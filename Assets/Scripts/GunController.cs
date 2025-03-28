@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-namespace PlayerControls {
+namespace Guns {
 
 public class GunController : MonoBehaviour
 {
@@ -104,7 +104,7 @@ public class GunController : MonoBehaviour
         for (int i = 0; i < shotgunPelletNum; i++) {
             GameObject bullet = Instantiate(bulletPrefab,transform.position,transform.rotation);
 
-            bullet.GetComponent<Rigidbody>().linearVelocity = Vector3.Normalize(bullet.transform.forward+new Vector3(Random.Range(shotgunSpread,-shotgunSpread),Random.Range(shotgunSpread,-shotgunSpread),0)) *shotgunBulletSpeed;
+            bullet.GetComponent<Rigidbody>().linearVelocity = Vector3.Normalize(bullet.transform.forward+bullet.transform.right*Random.Range(shotgunSpread,-shotgunSpread)+bullet.transform.up*Random.Range(shotgunSpread,-shotgunSpread)) *shotgunBulletSpeed;
             bullet.GetComponent<BulletController>().setup(shotgunBulletDamange,isFriendly,shotgunBulletLifeSpan);
             bullet.transform.localScale *= shotgunBulletSize;
         }

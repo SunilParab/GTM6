@@ -1,3 +1,4 @@
+using NPCs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -58,7 +59,7 @@ public class CarController : MonoBehaviour
             if (rb.linearVelocity.magnitude > maxSpeed) {
                 rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
             }
-            Debug.Log(rb.linearVelocity.magnitude);
+
             //Rotate
             transform.Rotate(Vector3.up * moveInput.x * rotationSpeed, Space.Self);
 
@@ -79,5 +80,11 @@ public class CarController : MonoBehaviour
         reversing = false;
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy")) {
+            collision.gameObject.GetComponent<NpcBehavior>().TakeDamage(rb.linearVelocity.magnitude * 2);
+        }
+    }
 
 }

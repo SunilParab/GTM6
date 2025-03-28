@@ -7,6 +7,8 @@ public class NpcBehavior : MonoBehaviour
     [SerializeField]
     protected float health;
 
+    float cash;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,6 +25,10 @@ public class NpcBehavior : MonoBehaviour
     //Internal Functions
     public void TakeDamage(float damage) {
         health -= damage;
+
+        if (health <= 0) {
+            Destroy(gameObject);
+        }
     }
 
 }
