@@ -38,6 +38,7 @@ public class CopBehavior : NpcBehavior
 
         transform.Find("Gun").GetComponent<GunController>().DoubleReload();
 
+        cash = Random.Range(10,50);
     }
 
     // Update is called once per frame

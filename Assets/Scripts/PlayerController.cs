@@ -1,6 +1,9 @@
 using System.Data.Common;
+using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace PlayerControls {
 
@@ -8,7 +11,16 @@ public class PlayerController : MonoBehaviour
 {
 
     [SerializeField]
-    float health = 100;
+    float health = 500;
+    [SerializeField]
+    float maxHealth = 500;
+    [SerializeField]
+    UnityEngine.UI.Image healthBar;
+
+    public double money;
+    [SerializeField]
+    TextMeshProUGUI moneyText;
+
     public static PlayerController reference;
 
     //Movement Variables
@@ -116,6 +128,11 @@ public class PlayerController : MonoBehaviour
         } else if (Input.GetKey(KeyCode.Alpha3)) {
             myGun.SetGun(Guns.GunController.GunType.Sniper);
         }
+
+        //Update Healthbar
+        healthBar.fillAmount = health/maxHealth;
+
+        moneyText.text = money.ToString();
     }
 
 

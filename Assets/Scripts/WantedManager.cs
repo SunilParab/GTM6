@@ -36,7 +36,7 @@ public class WantedManager : MonoBehaviour
         }
     }
 
-    public void GainWanted(float amount) {Debug.Log("gain");
+    public void GainWanted(float amount) {
         wantedLevel += amount;
         if (!spawningCops) {
             if (wantedLevel >= 10) {

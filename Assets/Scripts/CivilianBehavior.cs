@@ -28,6 +28,8 @@ public class CivilianBehavior : NpcBehavior
         transform.Find("Model/Eye (1)").GetComponent<Renderer>().material.color = tempColor;
         //Shirt
         transform.Find("Model/Capsule").GetComponent<Renderer>().material.color = Random.ColorHSV();
+
+        cash = Random.Range(1,30);
     }
 
     // Update is called once per frame
