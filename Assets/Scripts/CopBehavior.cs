@@ -55,6 +55,7 @@ public class CopBehavior : NpcBehavior
         LayerMask wall = LayerMask.GetMask("Wall");
         if (!Physics.Linecast(transform.position,PlayerControls.PlayerController.reference.transform.position,wall) &&
             playerDistance < shootRange) {
+            myGun.transform.rotation = Quaternion.LookRotation(PlayerControls.PlayerController.reference.transform.position-transform.position, Vector3.up);
             myGun.Shoot();
         }
     }
