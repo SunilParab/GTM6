@@ -10,6 +10,8 @@ public class NpcBehavior : MonoBehaviour
     [SerializeField]
     protected NavMeshAgent nav;
 
+    [SerializeField]
+    protected float wantedValue;
     float cash;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,9 +29,14 @@ public class NpcBehavior : MonoBehaviour
 
     //Internal Functions
     public void TakeDamage(float damage) {
+        if (health <= 0) {
+            return;
+        }
+
         health -= damage;
 
         if (health <= 0) {
+            WantedManager.reference.GainWanted(wantedValue);
             Destroy(gameObject);
         }
     }

@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
 
     //Internal Functions
     public void TakeDamage(float damage) {
-        health -= damage;
+        health -= damage;//Debug.Log(health);
     }
 
     bool IsGrounded()

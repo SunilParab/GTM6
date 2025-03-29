@@ -13,14 +13,14 @@ public class GunController : MonoBehaviour
     //Pistol Variables
     const float pistolBulletSpeed = 80;
     const float pistolBulletDamange = 20;
-    const float pistolBulletLifeSpan = 3;
+    const float pistolBulletLifeSpan = 0.75f;
     const float pistolBulletSize = 0.5f;
     const float pistolReloadTime = 0.25f;
 
     //Cannon Variables
     const float shotgunBulletSpeed = 160;
     const float shotgunBulletDamange = 10;
-    const float shotgunBulletLifeSpan = 2;
+    const float shotgunBulletLifeSpan = 0.5f;
     const float shotgunBulletSize = 0.5f;
     const float shotgunReloadTime = 0.5f;
     const int shotgunPelletNum = 12;
@@ -29,11 +29,12 @@ public class GunController : MonoBehaviour
     //Sniper Variables
     const float sniperBulletSpeed = 300;
     const float sniperBulletDamange = 100;
-    const float sniperBulletLifeSpan = 2;
+    const float sniperBulletLifeSpan = 1;
     const float sniperBulletSize = 1;
     const float sniperReloadTime = 1f;
 
     //Shooting Variables
+    [SerializeField]
     public GunType curGun = GunType.Pistol;
     float reloadTime = pistolReloadTime;
     bool reloaded = true;
@@ -117,6 +118,11 @@ public class GunController : MonoBehaviour
         bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*sniperBulletSpeed;
         bullet.GetComponent<BulletController>().setup(sniperBulletDamange,isFriendly,sniperBulletLifeSpan);
         bullet.transform.localScale *= sniperBulletSize;
+    }
+
+    //Function used to nerf npcs
+    public void DoubleReload() {
+        reloadTime *= 2;
     }
 
 }
