@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace PlayerControls {
 
@@ -156,6 +157,15 @@ public class PlayerController : MonoBehaviour
     //Internal Functions
     public void TakeDamage(float damage) {
         health -= damage;
+
+        if (health <= 0) {
+            Die();
+        }
+    }
+
+    void Die() {
+        SceneManager.LoadScene("Restart Menu");
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void Heal(float amount) {
