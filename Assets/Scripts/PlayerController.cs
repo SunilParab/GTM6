@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     float health = 100;
+    public static PlayerController reference;
 
     //Movement Variables
     [SerializeField]
@@ -47,6 +48,11 @@ public class PlayerController : MonoBehaviour
     InputAction interactAction;
     InputAction attackAction;
     InputAction zoomAction;
+
+    void Awake()
+    {
+        reference = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
