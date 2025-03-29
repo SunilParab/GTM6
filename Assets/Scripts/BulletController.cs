@@ -10,10 +10,13 @@ public class BulletController : MonoBehaviour
     bool friendly;
     float lifespan;
 
+    Vector3 lastPos;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Invoke("maxRange",lifespan);
+        lastPos = transform.position;
     }
 
     public void setup(float damage, bool friendly, float lifespan) {
@@ -35,7 +38,17 @@ public class BulletController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnTriggerEnter(Collider collision)
+    void LateUpdate()
+    {
+        LayerMask wall = ~LayerMask.GetMask("Bullet");
+        RaycastHit hit;
+
+        if (Physics.Linecast(lastPos,transform.position,out hit,wall)) {
+            Collided(hit.collider);
+        }
+    }
+
+    void Collided(Collider collision)
     {
 
         if (friendly) {
@@ -46,6 +59,7 @@ public class BulletController : MonoBehaviour
 
             if (collision.gameObject.CompareTag("Enemy")) {
                 collision.gameObject.GetComponent<NPCs.NpcBehavior>().TakeDamage(damage);
+                Destroy(gameObject);
             }
             
         } else {
@@ -56,6 +70,7 @@ public class BulletController : MonoBehaviour
 
             if (collision.gameObject.CompareTag("Player")) {
                 collision.gameObject.GetComponent<PlayerControls.PlayerController>().TakeDamage(damage);
+                Destroy(gameObject);
             }
 
         }
