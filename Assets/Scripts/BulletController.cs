@@ -59,7 +59,10 @@ public class BulletController : MonoBehaviour
             }
 
         }
-        Destroy(gameObject);
+
+        if (collision.gameObject.CompareTag("Wall")) {
+            Destroy(gameObject);
+        }
     }
 
 }

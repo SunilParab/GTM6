@@ -2,6 +2,8 @@ using NPCs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+namespace PlayerControls {
+
 public class CarController : MonoBehaviour
 {
     //Movement Variables
@@ -86,5 +88,7 @@ public class CarController : MonoBehaviour
             collision.gameObject.GetComponent<NpcBehavior>().TakeDamage(rb.linearVelocity.magnitude * 2);
         }
     }
+
+}
 
 }

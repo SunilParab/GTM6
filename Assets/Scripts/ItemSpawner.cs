@@ -1,17 +1,17 @@
 using UnityEngine;
 
+namespace Items {
+
 public class ItemSpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject itemPrefab;
     [SerializeField]
-    private GameObject badItemPrefab;
+    private GameObject item2Prefab;
     [SerializeField]
     private float timer;
     [SerializeField]
     private float spawnRange;
-    [SerializeField]
-    private float spawnHeight;
 
     // Start is called before the first frame update
     void Start()
@@ -30,11 +30,13 @@ public class ItemSpawner : MonoBehaviour
         int type = Random.Range(0,2);
         switch (type) {
             case 0:
-                Instantiate(itemPrefab,new Vector3(Random.Range(-spawnRange,spawnRange),Random.Range(0,spawnHeight),Random.Range(-spawnRange,spawnRange)), Quaternion.identity);
+                Instantiate(itemPrefab,new Vector3(Random.Range(-spawnRange,spawnRange),2,Random.Range(-spawnRange,spawnRange)), Quaternion.identity);
                 break;
             case 1:
-                Instantiate(badItemPrefab,new Vector3(Random.Range(-spawnRange,spawnRange),Random.Range(0,spawnHeight),Random.Range(-spawnRange,spawnRange)), Quaternion.identity);
+                Instantiate(item2Prefab,new Vector3(Random.Range(-spawnRange,spawnRange),2,Random.Range(-spawnRange,spawnRange)), Quaternion.identity);
                 break;
         }
     }
+}
+
 }

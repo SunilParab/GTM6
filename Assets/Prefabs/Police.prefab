@@ -120,7 +120,7 @@ MonoBehaviour:
   wantedValue: 20
   myGun: {fileID: 4455635051653114533}
   shootRange: 40
-  chaseRange: 100
+  chaseRange: 150
   movementRange: 180
 --- !u!136 &9037877231089513129
 CapsuleCollider:

@@ -155,7 +155,15 @@ public class PlayerController : MonoBehaviour
 
     //Internal Functions
     public void TakeDamage(float damage) {
-        health -= damage;//Debug.Log(health);
+        health -= damage;
+    }
+
+    public void Heal(float amount) {
+        health += amount;
+
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
     }
 
     bool IsGrounded()
