@@ -207,7 +207,8 @@ public class PlayerController : MonoBehaviour
         if (myCar != null) {
             driving = true;
             rb.linearVelocity = new Vector3();
-            myCollider.enabled = false;
+            //myCollider.enabled = false;
+            Physics.IgnoreLayerCollision(6, 8, false);
             myCar.Enter();
         }
 
@@ -216,10 +217,12 @@ public class PlayerController : MonoBehaviour
     void Exit() {
         driving = false;
         transform.Translate(0,3,0);
-        myCollider.enabled = true;
+        //myCollider.enabled = true;
         myCar.Exit();
 
         myCar = null;
+
+        Physics.IgnoreLayerCollision(6, 8, true);
     }
 
 

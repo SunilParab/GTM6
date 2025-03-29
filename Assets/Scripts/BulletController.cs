@@ -40,7 +40,7 @@ public class BulletController : MonoBehaviour
 
     void LateUpdate()
     {
-        LayerMask wall = ~LayerMask.GetMask("Bullet");
+        LayerMask wall = ~LayerMask.GetMask(new string[] {"Bullet","Car"});
         RaycastHit hit;
 
         if (Physics.Linecast(lastPos,transform.position,out hit,wall)) {

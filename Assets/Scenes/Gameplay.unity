@@ -4943,7 +4943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2845785047816284491, guid: 39f19db8901111749abc8e7daeb1832a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.0242934
+      value: 101.3
       objectReference: {fileID: 0}
     - target: {fileID: 2845785047816284491, guid: 39f19db8901111749abc8e7daeb1832a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4951,7 +4951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2845785047816284491, guid: 39f19db8901111749abc8e7daeb1832a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -167.14053
+      value: -68.3
       objectReference: {fileID: 0}
     - target: {fileID: 2845785047816284491, guid: 39f19db8901111749abc8e7daeb1832a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6417,7 +6417,7 @@ GameObject:
   - component: {fileID: 1334816341}
   - component: {fileID: 1334816340}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Item Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12055,15 +12055,15 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 866795334}
+  - {fileID: 698162355}
+  - {fileID: 1601774476}
   - {fileID: 1487830176}
   - {fileID: 5436237394678118782}
-  - {fileID: 925008445}
-  - {fileID: 5665435766810607747}
-  - {fileID: 698162355}
+  - {fileID: 1089258111}
   - {fileID: 1256979298}
   - {fileID: 609346520}
+  - {fileID: 1334816341}
+  - {fileID: 925008445}
+  - {fileID: 5665435766810607747}
   - {fileID: 1560591105}
   - {fileID: 498566331}
-  - {fileID: 1601774476}
-  - {fileID: 1334816341}
-  - {fileID: 1089258111}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3874686984239606355}
   - component: {fileID: 291718483338319010}
   - component: {fileID: 2678739853022855600}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8169530746515953932}
   - component: {fileID: 6201764102287264144}
   - component: {fileID: 5191534632340031049}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1082403265422524194}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 7673458126206219188}
   - component: {fileID: 7517933458168933526}
   - component: {fileID: 7491451559173539961}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 1922325443227241180}
   - component: {fileID: 4620517243882462157}
   - component: {fileID: 1816117295310408542}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 8099818051587722835}
   - component: {fileID: 5324607180794030420}
   - component: {fileID: 954115938782813708}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -531,6 +531,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 500
+  maxHealth: 500
+  healthBar: {fileID: 0}
+  money: 0
+  moneyText: {fileID: 0}
   rb: {fileID: 8099818051587722835}
   model: {fileID: 367559009707069820}
   myCollider: {fileID: 954115938782813708}
@@ -576,7 +580,7 @@ GameObject:
   - component: {fileID: 8634056874099013452}
   - component: {fileID: 1255911117550355274}
   - component: {fileID: 4223639627003034452}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,7 +667,7 @@ GameObject:
   - component: {fileID: 7731835221269107597}
   - component: {fileID: 6265780699200625864}
   - component: {fileID: 3866799400658753456}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -764,7 +768,7 @@ GameObject:
   - component: {fileID: 2496817134585344255}
   - component: {fileID: 4045134090269774320}
   - component: {fileID: 8548673453039283605}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ear (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -850,7 +854,7 @@ GameObject:
   - component: {fileID: 5330000974904684622}
   - component: {fileID: 1940380074345217191}
   - component: {fileID: 5920893547116140740}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Eye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +940,7 @@ GameObject:
   - component: {fileID: 223565012309478960}
   - component: {fileID: 6689049880353785563}
   - component: {fileID: 4794517528722997797}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1022,7 +1026,7 @@ GameObject:
   - component: {fileID: 3865073424503878586}
   - component: {fileID: 8364651993215698190}
   - component: {fileID: 3103507325801787203}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
