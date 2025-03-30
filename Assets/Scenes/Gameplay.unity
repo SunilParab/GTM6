@@ -3019,7 +3019,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
@@ -3057,9 +3057,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 581502700}
-  moveAcceleration: 15
+  moveAcceleration: 25
   maxSpeed: 30
-  rotationSpeed: 2
+  rotationSpeed: 1.5
 --- !u!54 &581502700
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3069,7 +3069,7 @@ Rigidbody:
   m_GameObject: {fileID: 581502696}
   serializedVersion: 4
   m_Mass: 20
-  m_Drag: 0.3
+  m_Drag: 0.6
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -13003,7 +13003,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
