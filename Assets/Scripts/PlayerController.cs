@@ -196,11 +196,22 @@ public class PlayerController : MonoBehaviour
         UnZoom();
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, carRange);
+
+        float carDist = -1;
+        
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Car")) {
-                myCar = hitCollider.GetComponent<CarController>();
-                break;
+                if (myCar == null) {
+                    myCar = hitCollider.GetComponent<CarController>();
+                    carDist = Vector3.Distance(transform.position, hitCollider.transform.position);
+                } else {
+                    float newCarDist = Vector3.Distance(transform.position, hitCollider.transform.position);
+                    if (newCarDist < carDist) {
+                        myCar = hitCollider.GetComponent<CarController>();
+                        carDist = newCarDist;
+                    }
+                }
             }
         }
 
@@ -208,7 +219,7 @@ public class PlayerController : MonoBehaviour
             driving = true;
             rb.linearVelocity = new Vector3();
             //myCollider.enabled = false;
-            Physics.IgnoreLayerCollision(6, 8, false);
+            Physics.IgnoreLayerCollision(6, 8, true);
             myCar.Enter();
         }
 
@@ -222,7 +233,7 @@ public class PlayerController : MonoBehaviour
 
         myCar = null;
 
-        Physics.IgnoreLayerCollision(6, 8, true);
+        Physics.IgnoreLayerCollision(6, 8, false);
     }
 
 
