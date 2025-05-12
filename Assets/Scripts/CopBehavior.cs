@@ -1,3 +1,4 @@
+using System.Collections;
 using Guns;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,6 +17,11 @@ public class CopBehavior : NpcBehavior
     [SerializeField]
     float movementRange = 180;
 
+    [SerializeField]
+    float maxDownTime = 5f;
+    [SerializeField]
+    float downTime = 5f;
+    bool timeTicking = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,7 +42,11 @@ public class CopBehavior : NpcBehavior
             shootRange = 30;
         }
 
-        transform.Find("Gun").GetComponent<GunController>().DoubleReload();
+        transform.Find("Gun").GetComponent<GunController>().InitDoubleReload();
+
+        if (!KeepShield()) {
+            Destroy(transform.Find("Shield").gameObject);
+        }
 
         cash = Random.Range(10,50);
     }
@@ -46,6 +56,11 @@ public class CopBehavior : NpcBehavior
     {
 
         if (WantedManager.reference.wantedStars > 0) {
+
+            if (timeTicking) {
+                downTime = maxDownTime;
+                timeTicking = false;
+            }
 
             float playerDistance = Vector3.Distance(transform.position,PlayerControls.PlayerController.reference.transform.position);
 
@@ -61,8 +76,46 @@ public class CopBehavior : NpcBehavior
                 myGun.transform.rotation = Quaternion.LookRotation(PlayerControls.PlayerController.reference.transform.position-myGun.transform.position, Vector3.up);
                 myGun.Shoot();
             }
+        } else {
+
+            if (timeTicking) {
+                downTime -= Time.deltaTime;
+            } else {
+                downTime = Random.Range(0f,maxDownTime);
+                timeTicking = true;
+            }
+
+            if (downTime <= 0) {
+
+                if (Random.Range(0,3) >= 2) {
+                    Destroy(gameObject);
+                    return;
+                } else {
+                    downTime = Random.Range(0f,maxDownTime);
+                    PickSpot();
+                }
+            }
         }
 
+    }
+
+    void PickSpot() {
+        nav.SetDestination(transform.position + new Vector3(Random.Range(-movementRange, movementRange), 1.7f, Random.Range(-movementRange, movementRange)));
+    }
+
+    bool KeepShield() {
+        if (WantedManager.reference.wantedStars < 4) {
+            return false;
+        }
+
+        return (Random.Range(0,3)+WantedManager.reference.wantedStars) > 5;
+
+    }
+
+    public void SetLongLife(int lifetime) {
+        downTime = lifetime;
+        timeTicking = true;
+        PickSpot();
     }
 
 }

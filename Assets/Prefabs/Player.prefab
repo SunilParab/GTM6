@@ -535,6 +535,12 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   money: 0
   moneyText: {fileID: 0}
+  pistolAmmo: 100
+  shotgunAmmo: 20
+  sniperAmmo: 10
+  ammoDisplay: {fileID: 0}
+  hasShotgun: 0
+  hasSniper: 0
   rb: {fileID: 8099818051587722835}
   model: {fileID: 367559009707069820}
   myCollider: {fileID: 954115938782813708}
@@ -544,7 +550,12 @@ MonoBehaviour:
   jumpForce: 20
   sensitivity: 250
   carRange: 10
-  firstPerson: 0
+  boostStacks: 0
+  boostTime: 30
+  boosted: 0
+  boostAmountValue: 1.5
+  shopRange: 10
+  shopping: 0
   myGun: {fileID: 3866799400658753456}
 --- !u!136 &954115938782813708
 CapsuleCollider:

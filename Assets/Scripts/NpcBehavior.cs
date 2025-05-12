@@ -12,7 +12,7 @@ public class NpcBehavior : MonoBehaviour, EnemyTarget
 
     [SerializeField]
     protected float wantedValue;
-    protected float cash;
+    protected int cash;
 
     bool dead = false;
 

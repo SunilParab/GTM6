@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Shop;
+using Guns;
 
 namespace PlayerControls {
 
@@ -20,7 +21,8 @@ public class PlayerController : MonoBehaviour
     UnityEngine.UI.Image healthBar;
 
     [SerializeField]
-    double money;
+    int money;
+    int totalMoney = 0;
     [SerializeField]
     TextMeshProUGUI moneyText;
 
@@ -62,6 +64,15 @@ public class PlayerController : MonoBehaviour
     bool driving = false;
 
     [SerializeField]
+    int boostStacks = 0;
+    [SerializeField]
+    float boostTime = 30;
+    public bool boosted = false;
+    float boostedMult = 1; //Actual variable for calculations
+    [SerializeField]
+    float boostAmountValue = 2;
+
+    [SerializeField]
     float shopRange = 10;
     public bool shopping = false;
 
@@ -97,6 +108,8 @@ public class PlayerController : MonoBehaviour
         zoomAction = InputSystem.actions.FindAction("Zoom");
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        transform.Find("Gun").GetComponent<GunController>().Init();
     }
 
     void Update() {
@@ -151,24 +164,28 @@ public class PlayerController : MonoBehaviour
         gunRotation = Mathf.Clamp(gunRotation, myCamera.maxUp, myCamera.maxDown);
         myGun.transform.localEulerAngles = new Vector3(gunRotation, 0, 0);
 
-        //Shooting
-        if (attackAction.triggered) {
-            switch (myGun.curGun) {
-            case Guns.GunController.GunType.Pistol:
-                if (pistolAmmo > 0 && myGun.Shoot()) {
-                    pistolAmmo--;
+        //Skip shooting
+        if (!(driving || shopping)) {
+
+            //Shooting
+            if (attackAction.triggered) {
+                switch (myGun.curGun) {
+                case Guns.GunController.GunType.Pistol:
+                    if (pistolAmmo > 0 && myGun.Shoot()) {
+                        pistolAmmo--;
+                    }
+                    break;
+                case Guns.GunController.GunType.Shotgun:
+                    if (shotgunAmmo > 0 && myGun.Shoot()) {
+                        shotgunAmmo--;
+                    }
+                    break;
+                case Guns.GunController.GunType.Sniper:
+                    if (sniperAmmo > 0 && myGun.Shoot()) {
+                        sniperAmmo--;
+                    }
+                    break;
                 }
-                break;
-            case Guns.GunController.GunType.Shotgun:
-                if (shotgunAmmo > 0 && myGun.Shoot()) {
-                    shotgunAmmo--;
-                }
-                break;
-            case Guns.GunController.GunType.Sniper:
-                if (sniperAmmo > 0 && myGun.Shoot()) {
-                    sniperAmmo--;
-                }
-                break;
             }
         }
 
@@ -202,8 +219,8 @@ public class PlayerController : MonoBehaviour
             Vector2 moveInput = moveAction.ReadValue<Vector2>();
             Vector3 moveValue = new Vector3(moveInput.x, 0, moveInput.y);
 
-            if (rb.linearVelocity.magnitude < maxSpeed) {
-                rb.AddForce(transform.rotation*(moveAcceleration*1000*Time.deltaTime*moveValue),ForceMode.Force);
+            if (rb.linearVelocity.magnitude < maxSpeed * boostedMult) {
+                rb.AddForce(transform.rotation*(moveAcceleration*1000*Time.deltaTime*moveValue * boostedMult),ForceMode.Force);
             }
  
         }
@@ -220,6 +237,15 @@ public class PlayerController : MonoBehaviour
     }
 
     void Die() {
+
+        if (PlayerPrefs.HasKey("HighScore")) {
+            if (totalMoney > PlayerPrefs.GetInt("HighScore")) {
+                PlayerPrefs.SetInt("HighScore",totalMoney);
+            }
+        } else {
+            PlayerPrefs.SetInt("HighScore",totalMoney);
+        }
+
         SceneManager.LoadScene("Restart Menu");
         Cursor.lockState = CursorLockMode.None;
     }
@@ -360,14 +386,37 @@ public class PlayerController : MonoBehaviour
     }
 
     public void GainBoost() {
+        maxHealth -= 10;
+
+        if (health > maxHealth) {
+            health = maxHealth;
+            if (health <= 0) {
+                Die();
+                return;
+            }
+        }
+
+        boostStacks++;
+        boosted = true;
+        boostedMult = boostAmountValue;
+        Invoke("BoostEnd",boostTime);
 
     }
 
-    public void GainMoney(float amount) {
+    void BoostEnd() {
+        boostStacks--;
+        if (boostStacks == 0) {
+            boosted = false;
+            boostedMult = 1;
+        }
+    }
+
+    public void GainMoney(int amount) {
         money += amount;
+        totalMoney += amount;
     }
 
-    public bool SpendMoney(float amount) {
+    public bool SpendMoney(int amount) {
         if (amount > money) {
             return false;
         }

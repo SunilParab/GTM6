@@ -13,10 +13,18 @@ public class NpcSpawner : MonoBehaviour
     [SerializeField]
     private int spawnAttempts;
 
+    [SerializeField]
+    int initialSpawn = 20;
+
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("NPCSpawn",timer,timer);
+
+        for (int i = 0; i < initialSpawn; i++) {
+            NPCSpawn();
+        }
+
     }
 
     // Update is called once per frame

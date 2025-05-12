@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour
     float startY;
     float startZ;
 
+    bool zoomed = false;
+
     //Right click rotate
     [SerializeField]
     float spinSensitivity = 10;
@@ -67,6 +69,9 @@ public class CameraController : MonoBehaviour
         //Spin around
         transform.RotateAround(gameObject.transform.parent.transform.position,gameObject.transform.parent.transform.up,spinOffset);
 
+        if (zoomed) {
+            transform.Translate(new Vector3(0.5f,0,0));
+        }
 
         //Stay out of ground
         if (transform.position.y < 0.1f) {
@@ -82,10 +87,12 @@ public class CameraController : MonoBehaviour
     //Zoom behaviors
     public void Zoom() {
         radius = 0;
+        zoomed = true;
     }
 
     public void UnZoom() {
         radius = radiusDefault;
+        zoomed = false;
     }
 
 }

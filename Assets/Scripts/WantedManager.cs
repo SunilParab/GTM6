@@ -29,7 +29,7 @@ public class WantedManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        InvokeRepeating("RandomCopSpawn",5,5);
     }
 
     // Update is called once per frame
@@ -102,6 +102,24 @@ public class WantedManager : MonoBehaviour
         }
 
         display.ShowStars();
+    }
+
+    //Spawning seperate from the normal loop
+    void RandomCopSpawn()
+    {
+
+        Vector3 NPCPos;
+        for (int i = 0; i < spawnAttempts; i++) {
+
+            NPCPos = new Vector3(Random.Range(-spawnRange,spawnRange),1.75f,Random.Range(-spawnRange,spawnRange));
+
+            if (!Physics.CheckBox(NPCPos+new Vector3(0,-0.6f,0),new Vector3(0.55f,1.1f,0.55f))) {
+                GameObject enem = Instantiate(enemyPrefab,NPCPos, Quaternion.identity);
+                enem.GetComponent<CopBehavior>().SetLongLife(10);
+                break;
+            }
+        }
+
     }
 
 }

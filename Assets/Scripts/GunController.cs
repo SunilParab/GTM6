@@ -10,33 +10,12 @@ public class GunController : MonoBehaviour
     //Gun Variables
     public enum GunType {Pistol,Shotgun,Sniper}
 
-    //Pistol Variables
-    const float pistolBulletSpeed = 80;
-    const float pistolBulletDamange = 20;
-    const float pistolBulletLifeSpan = 0.75f;
-    const float pistolBulletSize = 0.5f;
-    const float pistolReloadTime = 0.25f;
-
-    //Cannon Variables
-    const float shotgunBulletSpeed = 160;
-    const float shotgunBulletDamange = 10;
-    const float shotgunBulletLifeSpan = 0.5f;
-    const float shotgunBulletSize = 0.5f;
-    const float shotgunReloadTime = 0.5f;
-    const int shotgunPelletNum = 12;
-    const float shotgunSpread = 0.1f;
-
-    //Sniper Variables
-    const float sniperBulletSpeed = 300;
-    const float sniperBulletDamange = 100;
-    const float sniperBulletLifeSpan = 1;
-    const float sniperBulletSize = 1;
-    const float sniperReloadTime = 1f;
+    Bullet myBullet;
 
     //Shooting Variables
     [SerializeField]
     public GunType curGun = GunType.Pistol;
-    float reloadTime = pistolReloadTime;
+    float reloadTime;
     bool reloaded = true;
     [SerializeField]
     GameObject bulletPrefab;
@@ -44,8 +23,19 @@ public class GunController : MonoBehaviour
     [SerializeField]
     bool isFriendly;
 
-    public bool Shoot()
-    {
+    public void Init() {
+        SetGun(curGun);
+        reloadTime = myBullet.reloadTime;
+    }
+
+    //Function used to nerf npcs
+    public void InitDoubleReload() {
+        SetGun(curGun);
+        reloadTime = myBullet.reloadTime;
+        reloadTime *= 2;
+    }
+
+    public bool Shoot() {
         if (reloaded) {
             Fire();
             return true;
@@ -77,15 +67,21 @@ public class GunController : MonoBehaviour
         switch (newType) {
             case GunType.Pistol:
                 curGun = GunType.Pistol;
-                reloadTime = pistolReloadTime;
+                myBullet = ScriptableObject.CreateInstance<PistolBullet>();
+                myBullet.Init();
+                reloadTime = myBullet.reloadTime;
                 break;
             case GunType.Shotgun:
                 curGun = GunType.Shotgun;
-                reloadTime = shotgunReloadTime;
+                myBullet = ScriptableObject.CreateInstance<ShotgunBullet>();
+                myBullet.Init();
+                reloadTime = myBullet.reloadTime;
                 break;
             case GunType.Sniper:
                 curGun = GunType.Sniper;
-                reloadTime = sniperReloadTime;
+                myBullet = ScriptableObject.CreateInstance<SniperBullet>();
+                myBullet.Init();
+                reloadTime = myBullet.reloadTime;
                 break;
         }
     }
@@ -98,19 +94,19 @@ public class GunController : MonoBehaviour
 
         GameObject bullet = Instantiate(bulletPrefab,transform.position,transform.rotation);
 
-        bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*pistolBulletSpeed;
-        bullet.GetComponent<BulletController>().setup(pistolBulletDamange,isFriendly,pistolBulletLifeSpan);
-        bullet.transform.localScale *= pistolBulletSize;
+        bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*myBullet.bulletSpeed;
+        bullet.GetComponent<BulletController>().setup(myBullet.bulletDamange,isFriendly,myBullet.bulletLifeSpan);
+        bullet.transform.localScale *= myBullet.bulletSize;
     }
 
     void ShotgunShot() {
 
-        for (int i = 0; i < shotgunPelletNum; i++) {
+        for (int i = 0; i < myBullet.pelletNum; i++) {
             GameObject bullet = Instantiate(bulletPrefab,transform.position,transform.rotation);
 
-            bullet.GetComponent<Rigidbody>().linearVelocity = Vector3.Normalize(bullet.transform.forward+bullet.transform.right*Random.Range(shotgunSpread,-shotgunSpread)+bullet.transform.up*Random.Range(shotgunSpread,-shotgunSpread)) *shotgunBulletSpeed;
-            bullet.GetComponent<BulletController>().setup(shotgunBulletDamange,isFriendly,shotgunBulletLifeSpan);
-            bullet.transform.localScale *= shotgunBulletSize;
+            bullet.GetComponent<Rigidbody>().linearVelocity = Vector3.Normalize(bullet.transform.forward+bullet.transform.right*Random.Range(myBullet.spread,-myBullet.spread)+bullet.transform.up*Random.Range(myBullet.spread,-myBullet.spread)) * myBullet.bulletSpeed;
+            bullet.GetComponent<BulletController>().setup(myBullet.bulletDamange,isFriendly,myBullet.bulletLifeSpan);
+            bullet.transform.localScale *= myBullet.bulletSize;
         }
     }
 
@@ -118,14 +114,9 @@ public class GunController : MonoBehaviour
 
         GameObject bullet = Instantiate(bulletPrefab,transform.position,transform.rotation);
 
-        bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*sniperBulletSpeed;
-        bullet.GetComponent<BulletController>().setup(sniperBulletDamange,isFriendly,sniperBulletLifeSpan);
-        bullet.transform.localScale *= sniperBulletSize;
-    }
-
-    //Function used to nerf npcs
-    public void DoubleReload() {
-        reloadTime *= 2;
+        bullet.GetComponent<Rigidbody>().linearVelocity = bullet.transform.forward*myBullet.bulletSpeed;
+        bullet.GetComponent<BulletController>().setup(myBullet.bulletDamange,isFriendly,myBullet.bulletLifeSpan);
+        bullet.transform.localScale *= myBullet.bulletSize;
     }
 
 }
