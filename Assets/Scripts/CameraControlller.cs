@@ -44,6 +44,9 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (PlayerController.reference.shopping) {return;}
+
         //Get vertical
         verticalRotation -= Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, maxUp, maxDown);

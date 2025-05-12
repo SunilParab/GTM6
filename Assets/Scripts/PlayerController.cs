@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Shop;
 
 namespace PlayerControls {
 
@@ -12,15 +13,28 @@ public class PlayerController : MonoBehaviour
 {
 
     [SerializeField]
-    float health = 500;
+    public float health = 500;
     [SerializeField]
-    float maxHealth = 500;
+    public float maxHealth = 500;
     [SerializeField]
     UnityEngine.UI.Image healthBar;
 
-    public double money;
+    [SerializeField]
+    double money;
     [SerializeField]
     TextMeshProUGUI moneyText;
+
+    public int pistolAmmo = 100;
+    public int shotgunAmmo = 20;
+    public int sniperAmmo = 10;
+    public readonly static int maxPistolAmmo = 250;
+    public readonly static int maxShotgunAmmo = 50;
+    public readonly static int maxSniperAmmo = 25;
+    [SerializeField]
+    TextMeshProUGUI ammoDisplay;
+
+    public bool hasShotgun = false;
+    public bool hasSniper = false;
 
     public static PlayerController reference;
 
@@ -48,12 +62,17 @@ public class PlayerController : MonoBehaviour
     bool driving = false;
 
     [SerializeField]
+    float shopRange = 10;
+    public bool shopping = false;
+
     bool firstPerson = false;
 
     [SerializeField]
     Guns.GunController myGun;
     float gunRotation;
-    
+
+    ShopManager curShop = null;
+
     //Input systems
     InputAction moveAction;
     InputAction jumpAction;
@@ -83,8 +102,15 @@ public class PlayerController : MonoBehaviour
     void Update() {
 
         if (interactAction.triggered) {
-            DriveToggle();
+
+            if (shopping) {
+                StopShopping();
+            } else if (driving || !CheckStore()) { //if not driving check for shop
+                DriveToggle();
+            }
         }
+
+        if (shopping) {return;}
 
         if (!driving) {
 
@@ -111,6 +137,14 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime, Space.Self);
         }
 
+        //Choose Gun
+        if (Input.GetKey(KeyCode.Alpha1)) {
+            myGun.SetGun(Guns.GunController.GunType.Pistol);
+        } else if (Input.GetKey(KeyCode.Alpha2) && hasShotgun) {
+            myGun.SetGun(Guns.GunController.GunType.Shotgun);
+        } else if (Input.GetKey(KeyCode.Alpha3) && hasSniper) {
+            myGun.SetGun(Guns.GunController.GunType.Sniper);
+        }
 
         //Point Gun
         gunRotation -= Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
@@ -119,28 +153,50 @@ public class PlayerController : MonoBehaviour
 
         //Shooting
         if (attackAction.triggered) {
-            myGun.Shoot();
+            switch (myGun.curGun) {
+            case Guns.GunController.GunType.Pistol:
+                if (pistolAmmo > 0 && myGun.Shoot()) {
+                    pistolAmmo--;
+                }
+                break;
+            case Guns.GunController.GunType.Shotgun:
+                if (shotgunAmmo > 0 && myGun.Shoot()) {
+                    shotgunAmmo--;
+                }
+                break;
+            case Guns.GunController.GunType.Sniper:
+                if (sniperAmmo > 0 && myGun.Shoot()) {
+                    sniperAmmo--;
+                }
+                break;
+            }
         }
 
-        if (Input.GetKey(KeyCode.Alpha1)) {
-            myGun.SetGun(Guns.GunController.GunType.Pistol);
-        } else if (Input.GetKey(KeyCode.Alpha2)) {
-            myGun.SetGun(Guns.GunController.GunType.Shotgun);
-        } else if (Input.GetKey(KeyCode.Alpha3)) {
-            myGun.SetGun(Guns.GunController.GunType.Sniper);
-        }
-
-        //Update Healthbar
-        healthBar.fillAmount = health/maxHealth;
-
-        moneyText.text = money.ToString();
     }
 
 
-    // Update is called once per frame
+    void LateUpdate() {
+        //Update Healthbar and Money
+        healthBar.fillAmount = health/maxHealth;
+        moneyText.text = money.ToString();
+
+        switch (myGun.curGun) {
+            case Guns.GunController.GunType.Pistol:
+                ammoDisplay.text = pistolAmmo.ToString();
+                break;
+            case Guns.GunController.GunType.Shotgun:
+                ammoDisplay.text = shotgunAmmo.ToString();
+                break;
+            case Guns.GunController.GunType.Sniper:
+                ammoDisplay.text = sniperAmmo.ToString();
+                break;
+        }
+    }
+
+
     void FixedUpdate()
     {
-        if (!driving) {
+        if (!driving && !shopping) {
 
             //Movement
             Vector2 moveInput = moveAction.ReadValue<Vector2>();
@@ -193,8 +249,6 @@ public class PlayerController : MonoBehaviour
 
     void Enter() {
 
-        UnZoom();
-
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, carRange);
 
         float carDist = -1;
@@ -216,6 +270,9 @@ public class PlayerController : MonoBehaviour
         }
 
         if (myCar != null) {
+
+            UnZoom();
+
             driving = true;
             rb.linearVelocity = new Vector3();
             //myCollider.enabled = false;
@@ -248,6 +305,75 @@ public class PlayerController : MonoBehaviour
         firstPerson = false;
         model.SetActive(true);
         myCamera.UnZoom();
+    }
+
+    bool CheckStore() {
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, shopRange);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Shop")) {
+                StartShopping(hitCollider.GetComponent<ShopManager>());
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void StartShopping(ShopManager shop) {
+        shop.OpenShop();
+        curShop = shop;
+        shopping = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void StopShopping() {
+        curShop.CloseShop();
+        curShop = null;
+        shopping = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void GainAmmo(Guns.GunController.GunType gun, int amount) {
+        switch (gun) {
+            case Guns.GunController.GunType.Pistol:
+                pistolAmmo += amount;
+                if (pistolAmmo > maxPistolAmmo) {
+                    pistolAmmo = maxPistolAmmo;
+                }
+                break;
+            case Guns.GunController.GunType.Shotgun:
+                shotgunAmmo += amount;
+                if (shotgunAmmo > maxShotgunAmmo) {
+                    shotgunAmmo = maxShotgunAmmo;
+                }
+                break;
+            case Guns.GunController.GunType.Sniper:
+                sniperAmmo += amount;
+                if (sniperAmmo > maxSniperAmmo) {
+                    sniperAmmo = maxSniperAmmo;
+                }
+                break;
+        }
+    }
+
+    public void GainBoost() {
+
+    }
+
+    public void GainMoney(float amount) {
+        money += amount;
+    }
+
+    public bool SpendMoney(float amount) {
+        if (amount > money) {
+            return false;
+        }
+
+        money -= amount;
+        return true;
     }
 
 }

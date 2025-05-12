@@ -7,6 +7,7 @@ TagManager:
   - Car
   - Enemy
   - Wall
+  - Shop
   layers:
   - Default
   - TransparentFX

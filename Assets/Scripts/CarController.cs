@@ -85,7 +85,7 @@ public class CarController : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy")) {
-            collision.gameObject.GetComponent<NpcBehavior>().TakeDamage(rb.linearVelocity.magnitude * 2);
+            collision.gameObject.GetComponent<EnemyTarget>().TakeDamage(rb.linearVelocity.magnitude * 2);
         }
     }
 

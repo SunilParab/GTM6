@@ -421,7 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   nav: {fileID: 7178624614778192415}
-  wantedValue: 10
+  wantedValue: 15
   movementRange: 180
   timer: 5
 --- !u!136 &2197724400880050066

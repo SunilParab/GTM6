@@ -14,7 +14,7 @@ public class CashPickup : ItemBehavior
     }
 
     protected override void Collect() {
-        PlayerControls.PlayerController.reference.money += value;
+        PlayerControls.PlayerController.reference.GainMoney(value);
     }
 
 }

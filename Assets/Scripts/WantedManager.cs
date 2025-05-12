@@ -5,8 +5,7 @@ namespace NPCs
 
 public class WantedManager : MonoBehaviour
 {
-    [SerializeField]
-    float wantedLevel;
+    public float wantedLevel;
     public static WantedManager reference;
     bool spawningCops = false;
     [SerializeField]
@@ -15,6 +14,12 @@ public class WantedManager : MonoBehaviour
     private float spawnRange;
     [SerializeField]
     private int spawnAttempts;
+
+    public int wantedStars = 0;
+    public static readonly float[] starValues = {10,25,50,100,200};
+
+    [SerializeField]
+    WantedDisplay display;
 
     void Awake()
     {
@@ -34,21 +39,23 @@ public class WantedManager : MonoBehaviour
         if (wantedLevel < 0) {
             wantedLevel = 0;
         }
+        UpdateWantedStars();
     }
 
     public void GainWanted(float amount) {
         wantedLevel += amount;
         if (!spawningCops) {
-            if (wantedLevel >= 10) {
+            if (wantedLevel > starValues[0]) {
                 CopSpawn();
             }
         }
+        UpdateWantedStars();
     }
 
     void CopSpawn()
     {
 
-        if (wantedLevel >= 10) {
+        if (wantedLevel > starValues[0]) {
             spawningCops = true;
 
             Vector3 NPCPos;
@@ -62,21 +69,39 @@ public class WantedManager : MonoBehaviour
                 }
             }
 
-            if (wantedLevel > 200) {
+            if (wantedLevel > starValues[4]) {
                 Invoke("CopSpawn",1);
-            } else if (wantedLevel > 100) {
+            } else if (wantedLevel > starValues[3]) {
                 Invoke("CopSpawn",3);
-            } else if (wantedLevel > 50) {
+            } else if (wantedLevel > starValues[2]) {
                 Invoke("CopSpawn",5);
-            } else if (wantedLevel > 25) {
+            } else if (wantedLevel > starValues[1]) {
                 Invoke("CopSpawn",8);
             } else {
                 Invoke("CopSpawn",10);
             }
 
-        } else {
+        } else { //This is the only way cops stop spawning
             spawningCops = false;
         }
+    }
+
+    void UpdateWantedStars() {
+        if (wantedLevel > starValues[4]) {
+            wantedStars = 5;
+        } else if (wantedLevel > starValues[3]) {
+            wantedStars = 4;
+        } else if (wantedLevel > starValues[2]) {
+            wantedStars = 3;
+        } else if (wantedLevel > starValues[1]) {
+            wantedStars = 2;
+        } else if (wantedLevel > starValues[0]) {
+            wantedStars = 1;
+        } else {
+            wantedStars = 0;
+        }
+
+        display.ShowStars();
     }
 
 }

@@ -44,10 +44,13 @@ public class GunController : MonoBehaviour
     [SerializeField]
     bool isFriendly;
 
-    public void Shoot()
+    public bool Shoot()
     {
         if (reloaded) {
             Fire();
+            return true;
+        } else {
+            return false;
         }
 
     }

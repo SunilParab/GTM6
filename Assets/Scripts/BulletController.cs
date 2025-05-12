@@ -46,6 +46,7 @@ public class BulletController : MonoBehaviour
         if (Physics.Linecast(lastPos,transform.position,out hit,wall)) {
             Collided(hit.collider);
         }
+        lastPos = transform.position;
     }
 
     void Collided(Collider collision)
@@ -58,7 +59,7 @@ public class BulletController : MonoBehaviour
             }
 
             if (collision.gameObject.CompareTag("Enemy")) {
-                collision.gameObject.GetComponent<NPCs.NpcBehavior>().TakeDamage(damage);
+                collision.gameObject.GetComponent<NPCs.EnemyTarget>().TakeDamage(damage);
                 Destroy(gameObject);
             }
             

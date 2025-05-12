@@ -44,20 +44,25 @@ public class CopBehavior : NpcBehavior
     // Update is called once per frame
     void Update()
     {
-        float playerDistance = Vector3.Distance(transform.position,PlayerControls.PlayerController.reference.transform.position);
 
-        if (playerDistance < chaseRange) {
-            nav.SetDestination(PlayerControls.PlayerController.reference.transform.position);
-        } else {
-            nav.SetDestination(transform.position + new Vector3(Random.Range(-movementRange, movementRange), 1.7f, Random.Range(-movementRange, movementRange)));
+        if (WantedManager.reference.wantedStars > 0) {
+
+            float playerDistance = Vector3.Distance(transform.position,PlayerControls.PlayerController.reference.transform.position);
+
+            if (playerDistance < chaseRange) {
+                nav.SetDestination(PlayerControls.PlayerController.reference.transform.position);
+            } else {
+                nav.SetDestination(transform.position + new Vector3(Random.Range(-movementRange, movementRange), 1.7f, Random.Range(-movementRange, movementRange)));
+            }
+
+            LayerMask wall = LayerMask.GetMask("Wall");
+            if (!Physics.Linecast(transform.position,PlayerControls.PlayerController.reference.transform.position,wall) &&
+                playerDistance < shootRange) {
+                myGun.transform.rotation = Quaternion.LookRotation(PlayerControls.PlayerController.reference.transform.position-myGun.transform.position, Vector3.up);
+                myGun.Shoot();
+            }
         }
 
-        LayerMask wall = LayerMask.GetMask("Wall");
-        if (!Physics.Linecast(transform.position,PlayerControls.PlayerController.reference.transform.position,wall) &&
-            playerDistance < shootRange) {
-            myGun.transform.rotation = Quaternion.LookRotation(PlayerControls.PlayerController.reference.transform.position-transform.position, Vector3.up);
-            myGun.Shoot();
-        }
     }
 
 }

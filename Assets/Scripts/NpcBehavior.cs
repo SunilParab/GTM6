@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 namespace NPCs {
 
-public class NpcBehavior : MonoBehaviour
+public class NpcBehavior : MonoBehaviour, EnemyTarget
 {
     [SerializeField]
     protected float health;
@@ -29,7 +29,7 @@ public class NpcBehavior : MonoBehaviour
     }
 
 
-    //Internal Functions
+    //Damage Functions
     public void TakeDamage(float damage) {
         health -= damage;
 
@@ -43,7 +43,7 @@ public class NpcBehavior : MonoBehaviour
 
     void Die() {
         WantedManager.reference.GainWanted(wantedValue);
-        PlayerControls.PlayerController.reference.money += cash;
+        PlayerControls.PlayerController.reference.GainMoney(cash);
         Destroy(gameObject);
     }
 
